@@ -62,12 +62,6 @@ def merge_categories(df):
     for keyword in ['microbial contamination', 'bacterial contamination']:
         df.loc[df['Reason'].str.contains(keyword, case=False, na=False), 'Reason'] = 'Microbial contamination'
 
-    # Then catch general contamination (excluding chemical/cross which go to manufacturing)
-    general_contam = df['Reason'].str.contains('contaminat', case=False, na=False) & \
-                     ~df['Reason'].str.contains('cross-contamination', case=False, na=False) & \
-                     ~df['Reason'].str.contains('chemical contamination', case=False, na=False)
-    df.loc[general_contam, 'Reason'] = 'Microbial contamination'
-
     # CATEGORY 8: Lack of process control and Manufacturing defects (includes product contamination)
     for keyword in ['CGMP', 'manufacturing defect', 'quality', 'recalled by a supplier', 'recalled by a su',
                     'packaging defect', 'tablet defect', 'foreign particle', 'foreign matter',
@@ -76,7 +70,7 @@ def merge_categories(df):
                     'OOS', 'out-of-specification', 'content uniformity', 'uniformity', 'pH', 'moisture',
                     'degradation product', 'nitrosamine', 'NDMA', 'NDEA', 'heavy metal', 'residue',
                     'defective container', 'container defect', 'leaking container', 'container closure',
-                    'chemical contamination', 'cross-contamination']:
+                    'chemical contamination', 'cross-contamination', 'metal','glass' ,'Particle', 'Cross contamination']:
         df.loc[df['Reason'].str.contains(keyword, case=False,
                                          na=False), 'Reason'] = 'Lack of process control and Manufacturing defects'
 
