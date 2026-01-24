@@ -1,9 +1,9 @@
-# FDA Drug Recalls Analysis Dashboard
+# FDA Drug Recalls Analysis
 
 A Streamlit web application that analyzes and visualizes FDA drug recall data in real-time using the OpenFDA API.
 
 ## Description of the project:
-This interactive dashboard provides insights into drug recalls in the United States by fetching live data from the FDA's Enforcement Reports API. 
+This interactive graphs provides insights into drug recalls in the United States by fetching live data from the FDA's Enforcement Reports API. 
 The reports are updated on a weekly basis and the data considered highly organized. 
 The application categorizes recall reasons into meaningful groups and visualizes trends to help understand patterns in pharmaceutical safety issues.
 
@@ -24,7 +24,7 @@ The application categorizes recall reasons into meaningful groups and visualizes
 - **<u>Microbial contamination:</u>** The drug contains living bacteria, fungi, mold, or other microorganisms.
 - **<u>Lack of process control and manufacturing defects:</u>** Problems during production that affect product quality, safety, or effectiveness. This is the broadest category covering all manufacturing-related issues.
 
-### What Problem Does It Solve?
+### Graph interpretability
 Drug recalls happen for many different reasons, making it hard to spot patterns. This dashboard simplifies the data by:
 - Grouping hundreds of unique recall reasons into clear categories
 - Showing which types of issues are most common
