@@ -12,7 +12,7 @@ The application categorizes recall reasons into meaningful groups and visualizes
 - **<u>Smart categorization:</u>** Automatically groups similar recall reasons into 8 major categories
 - **<u>Interactive filtering:</u>** Filter recalls by severity classification (Class I, II, or III)- as sidebar and in graph 1
 - **<u>Visual analysis:</u>** Two interactive charts showing recall patterns by reason (graph 1) or over time (graph 2)
-- **<u>Color-coded severity:</u>** Red (dangerous), Orange (moderate), Yellow (low risk)
+- **<u>Color-coded severity:</u>** dangerous- life threatening (Red), moderate- temporary or reversible (Orange), low risk- not likely to harm but violated FDA rules in minor way (Yellow)
 
 ### Graph 1 explanation- 8 Major Categories:
 - **<u>Temperature deviation:</u>** The drug was stored or shipped outside its required temperature range, which can make it ineffective or dangerous.
@@ -33,6 +33,8 @@ Drug recalls happen for many different reasons, making it hard to spot patterns.
 
 ## Instructions on how to use the project:
 
+To open the app run main.py (in PyCharm execute in the Terminal Streamlit run main.py) or by online access:
 
-To open the app run main.py (in pycharm execute in the Terminal Streamlit run main.py) or access online by the following link:
 https://fdadrugrecall-pb3kfbfkj7nb3r7p6eqtfs.streamlit.app/
+
+Note: There is no '.streamlit' file with 'secret.toml' since key API is not required to retrieve the data from OpenFDA.
