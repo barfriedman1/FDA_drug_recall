@@ -94,8 +94,8 @@ st.sidebar.header("👤 User Profile")
 # Create a form
 with st.sidebar.form("profession_form"):
     user_profession = st.text_input(
-        "What is your profession?",
-        placeholder="e.g., Pharmacist, Doctor, Student..."
+        "Professional Role:",
+        placeholder="e.g., Pharmacist, Doctor, Regulatory Specialist..."
     )
 
     # Submit button inside the form
@@ -104,7 +104,7 @@ with st.sidebar.form("profession_form"):
     # Show message when submitted
     if submitted:
         if user_profession:
-            st.success(f"✅ Thank you, {user_profession}!")
+            st.success(f"Profile confirmed: {user_profession}.")
         else:
             st.warning("⚠️ Please enter your profession first")
 
