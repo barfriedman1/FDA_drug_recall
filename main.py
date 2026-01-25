@@ -88,6 +88,26 @@ for cls in ['Class I', 'Class II', 'Class III']:
 
 st.markdown("---")  # Add a horizontal line separator
 
+# SIDEBAR: User Profile Section
+st.sidebar.header("👤 User Profile")
+
+# Create a form
+with st.sidebar.form("profession_form"):
+    user_profession = st.text_input(
+        "What is your profession?",
+        placeholder="e.g., Pharmacist, Doctor, Student..."
+    )
+
+    # Submit button inside the form
+    submitted = st.form_submit_button("Submit")
+
+    # Show message when submitted
+    if submitted:
+        if user_profession:
+            st.success(f"✅ Thank you, {user_profession}!")
+        else:
+            st.warning("⚠️ Please enter your profession first")
+
 # SIDEBAR: Create filter options on the left side of the page
 st.sidebar.header("Filter Options")
 # Create a dropdown menu to select classification
