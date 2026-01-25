@@ -24,7 +24,7 @@ The application categorizes recall reasons into meaningful groups and visualizes
 - **<u>Microbial contamination:</u>** The drug contains living bacteria, fungi, mold, or other microorganisms.
 - **<u>Lack of process control and manufacturing defects:</u>** Problems during production that affect product quality, safety, or effectiveness. This is the broadest category covering all manufacturing-related issues.
 
-### Graph interpretability
+### Graph Interpretability:
 Drug recalls happen for many different reasons, making it hard to spot patterns. This dashboard simplifies the data by:
 - Grouping hundreds of unique recall reasons into clear categories
 - Showing which types of issues are most common
