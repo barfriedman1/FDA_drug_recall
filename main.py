@@ -92,13 +92,13 @@ st.sidebar.write(f"**Showing {len(filtered_data)} recalls**")
 
 st.sidebar.markdown("---")  # Add separator
 
-st.sidebar.write("**By Classification:**")
+st.sidebar.write("**Recall Severity Classification**")
 for cls in ['Class I', 'Class II', 'Class III']:
     st.sidebar.write(f"  - {cls}: {len(data[data['Classification'] == cls])} recalls")
 
 # GRAPH 1: Horizontal bar chart showing top 8 recall reasons
-st.subheader("Graph 1: Number of Recalls by Reason (top 8)", anchor=False)
-st.write("📊 Top reasons for drug recalls, colored by severity classification")
+st.subheader("Graph 1: Number of Recalls by Reason", anchor=False, text_alignment='center', divider='grey')
+st.badge(" 📈**Top reasons for drug recalls, colored by severity classification**", color="blue")
 
 # Get the top 8 most common reasons from filtered data
 top_8 = filtered_data['Reason'].value_counts().head(8).index
@@ -111,14 +111,13 @@ reason_class['Classification'] = pd.Categorical(reason_class['Classification'],
                                                 categories=['Class I', 'Class II', 'Class III'], ordered=True)
 
 # Show what percentage of data is displayed in the graph
-st.write(
-    f"📊 **Graph 1 displays {len(graph1_data)} out of {len(filtered_data)} recalls ({len(graph1_data) / len(filtered_data) * 100:.1f}% of data)**")
+st.badge(
+    f" **Graph 1 displays {len(graph1_data)} out of {len(filtered_data)} recalls ({len(graph1_data) / len(filtered_data) * 100:.1f}% of data)**", icon=":material/check:", color="green")
 
 # Create the bar chart
 fig1 = px.bar(reason_class, y='Reason', x='Count', color='Classification',
               color_discrete_map={'Class I': 'red', 'Class II': 'orange', 'Class III': 'yellow'},  # Set colors
               category_orders={'Classification': ['Class I', 'Class II', 'Class III']},  # Order legend 1→2→3
-              title='Drug Recalls by Reason (Colored by Severity)',
               labels={'Reason': 'Reason for Recall', 'Count': 'Number of Recalls'},
               orientation='h', barmode='stack')  # Horizontal bars, stacked by classification
 
@@ -137,8 +136,8 @@ st.info("""
 st.markdown("---")  # Add separator
 
 # GRAPH 2: Line chart showing recalls over time
-st.subheader("Graph 2: Recalls Over Time", anchor=False)
-st.write("📈 Trend of drug recalls by year")
+st.subheader("Graph 2: Drug Recalls Over Time", anchor=False, text_alignment='center', divider='grey')
+st.badge("📈**Trend of drug recalls by year**", color="blue")
 
 # Filter out records with unknown years
 year_data = filtered_data[filtered_data['Year'] != 'Unknown']
@@ -148,7 +147,7 @@ year_counts.columns = ['Year', 'Count']  # Rename columns
 year_counts = year_counts.sort_values('Year')  # Sort by year chronologically
 
 # Create line chart
-fig2 = px.line(year_counts, x='Year', y='Count', title='Drug Recalls Over Time',
+fig2 = px.line(year_counts, x='Year', y='Count',
                labels={'Year': 'Year', 'Count': 'Number of Recalls'}, markers=True)  # Add dots on line
 
 # Display the chart
