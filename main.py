@@ -92,7 +92,7 @@ st.sidebar.write(f"**Showing {len(filtered_data)} recalls**")
 
 st.sidebar.markdown("---")  # Add separator
 
-st.sidebar.write("**Recall Severity Classification**")
+st.sidebar.write("**Recall Severity Classification:**")
 for cls in ['Class I', 'Class II', 'Class III']:
     st.sidebar.write(f"  - {cls}: {len(data[data['Classification'] == cls])} recalls")
 
