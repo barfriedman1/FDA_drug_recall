@@ -48,7 +48,7 @@ def merge_categories(df):
         df.loc[df['Reason'].str.contains(keyword, case=False, na=False), 'Reason'] = 'Labeling errors'
 
     # CATEGORY 5: Incorrect potency
-    for keyword in ['potency', 'strength', 'superpotent', 'subpotent']:
+    for keyword in ['potency', 'strength', 'superpotent', 'subpotent','Potential',]:
         df.loc[df['Reason'].str.contains(keyword, case=False, na=False), 'Reason'] = 'Incorrect potency'
 
     # CATEGORY 6: Marketed without approved NDA/ANDA
@@ -59,18 +59,18 @@ def merge_categories(df):
 
     # CATEGORY 7: Microbial contamination (handle ALL contamination types here)
     # First catch specific microbial terms
-    for keyword in ['microbial contamination', 'bacterial contamination']:
+    for keyword in ['microbial contamination', 'bacterial contamination', 'Microbial', 'Bacterial']:
         df.loc[df['Reason'].str.contains(keyword, case=False, na=False), 'Reason'] = 'Microbial contamination'
 
     # CATEGORY 8: Lack of process control and Manufacturing defects (includes product contamination)
     for keyword in ['CGMP', 'manufacturing defect', 'quality', 'recalled by a supplier', 'recalled by a su',
-                    'packaging defect', 'tablet defect', 'foreign particle', 'foreign matter',
-                    'lack of processing control', 'stability issue', 'color variation',
-                    'dissolution', 'disintegration', 'impurities', 'impurity', 'out of specification',
+                    'packaging defect', 'tablet defect', 'foreign particle', 'foreign matter', 'Precipitate',
+                    'lack of processing control', 'stability', 'color variation', 'foreign tablet', 'foreign',
+                    'dissolution', 'disintegration', 'impurities', 'impurity', 'specification', 'SOP', 'particulate ',
                     'OOS', 'out-of-specification', 'content uniformity', 'uniformity', 'pH', 'moisture',
-                    'degradation product', 'nitrosamine', 'NDMA', 'NDEA', 'heavy metal', 'residue',
-                    'defective container', 'container defect', 'leaking container', 'container closure',
-                    'chemical contamination', 'cross-contamination', 'metal','glass' ,'Particle', 'Cross contamination']:
+                    'degradation product', 'nitrosamine', 'NDMA', 'NDEA', 'heavy metal', 'residue', 'imprinted',
+                    'defective container', 'container defect', 'leaking container', 'container closure', 'Crystallization',
+                    'chemical contamination', 'cross-contamination', 'metal','glass' ,'Particle', 'Cross contamination','Discoloration']:
         df.loc[df['Reason'].str.contains(keyword, case=False,
                                          na=False), 'Reason'] = 'Lack of process control and Manufacturing defects'
 
@@ -88,26 +88,6 @@ for cls in ['Class I', 'Class II', 'Class III']:
 
 st.markdown("---")  # Add a horizontal line separator
 
-# SIDEBAR: User Profile Section
-st.sidebar.header("👤 User Profile")
-
-# Create a form
-with st.sidebar.form("profession_form"):
-    user_profession = st.text_input(
-        "Professional Role:",
-        placeholder="e.g., Pharmacist, Doctor, Regulatory Specialist..."
-    )
-
-    # Submit button inside the form
-    submitted = st.form_submit_button("Submit")
-
-    # Show message when submitted
-    if submitted:
-        if user_profession:
-            st.success(f"Profile confirmed: {user_profession}.")
-        else:
-            st.warning("⚠️ Please enter your profession first")
-
 # SIDEBAR: Create filter options on the left side of the page
 st.sidebar.header("Filter Options")
 # Create a dropdown menu to select classification
@@ -118,7 +98,7 @@ filtered_data = data if selected_class == 'All' else data[data['Classification']
 st.sidebar.write(f"**Showing {len(filtered_data)} recalls**")
 
 # GRAPH 1: Horizontal bar chart showing top 8 recall reasons (changed from 9 to 8)
-st.subheader("Graph 1: Number of Recalls by Reason", anchor=False)
+st.subheader("Graph 1: Number of Recalls by Reason (top 8)", anchor=False)
 st.write("📊 Top reasons for drug recalls, colored by severity classification")
 
 # Get the top 8 most common reasons from filtered data
