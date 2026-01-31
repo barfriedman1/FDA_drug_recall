@@ -33,8 +33,8 @@ Drug recalls happen for many different reasons, making it hard to spot patterns.
 
 ## Instructions on how to use the project:
 
-To open the app run main.py (in PyCharm execute in the Terminal Streamlit run main.py) or by online access:
+**option 1:** run locally by cloning the repository, install the required packages and run the application by 'streamlit run main.py' The app will open automatically in your browser.
 
-https://fdadrugrecall-pb3kfbfkj7nb3r7p6eqtfs.streamlit.app/
+**option 2:** The app will automatically open by online access: https://fdadrugrecall-pb3kfbfkj7nb3r7p6eqtfs.streamlit.app/
 
 Note: There is no '.streamlit' file with 'secret.toml' since key API is not required to retrieve the data from OpenFDA.
