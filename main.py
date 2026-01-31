@@ -6,7 +6,7 @@ import requests
 st.title("FDA Drug Recalls Analysis", anchor=False)  # anchor=False removes the clickable link icon
 
 # Define a function to fetch data from FDA API
-# @st.cache_data caches the result so it doesn't re-fetch every time the app refreshes
+# @st.cache_data caches the result so it doesn't re-fetch every time using the app
 @st.cache_data
 def get_data():
     response = requests.get("https://api.fda.gov/drug/enforcement.json?limit=1000")
@@ -15,50 +15,50 @@ def get_data():
     products, classifications, reasons, years = [], [], [], []
 
     for recall in data['results']:
-        products.append(recall.get('product_description', 'Unknown')[:50])
+        products.append(recall.get('product_description', 'Unknown')[:50]) #unknown = default value if empty
         classifications.append(recall.get('classification', 'Unknown'))
-        reasons.append(recall.get('reason_for_recall', 'Unknown')[:80])
+        reasons.append(recall.get('reason_for_recall', 'Unknown'))
         report_date = recall.get('report_date', '')
         years.append(report_date[:4] if len(report_date) >= 4 else 'Unknown')
 
-    # Create a pandas DataFrame (table) with all the extracted data
+    # Create a pandas DataFrame with all the extracted data
     return pd.DataFrame({'Product': products, 'Classification': classifications,
                          'Reason': reasons, 'Year': years})
 
 
 # Define a function to merge similar recall reasons into broader categories
 def merge_categories(df):
-    df = df.copy()  # Create a copy to avoid modifying the original data
+    df = df.copy()  # Creates a completely independent duplicate of the dataframe, so changes to the copy don't affect the original.
 
     # CATEGORY 1: Lack of sterility assurance
-    df.loc[df['Reason'].str.contains('sterility', case=False, na=False), 'Reason'] = 'Lack of sterility assurance'
+    df.loc[df['Reason'].str.contains('sterility', case=False), 'Reason'] = 'Lack of sterility assurance'
 
     # CATEGORY 2: Adverse reactions
-    df.loc[df['Reason'].str.contains('adverse reaction', case=False, na=False), 'Reason'] = 'Adverse reactions'
+    df.loc[df['Reason'].str.contains('adverse reaction', case=False), 'Reason'] = 'Adverse reactions'
 
     # CATEGORY 3: Temperature deviation
-    df.loc[df['Reason'].str.contains('temperature', case=False, na=False), 'Reason'] = 'Temperature deviation'
+    df.loc[df['Reason'].str.contains('temperature', case=False), 'Reason'] = 'Temperature deviation'
 
     # CATEGORY 4: Labeling errors
     for keyword in ['label', 'labeling', 'mislabel', 'mislabeling', 'misbranding', 'misbranded',
                     'packaging error', 'packaging mix', 'wrong packaging', 'incorrect packaging',
                     'package mix-up', 'packaging mix-up']:
-        df.loc[df['Reason'].str.contains(keyword, case=False, na=False), 'Reason'] = 'Labeling errors'
+        df.loc[df['Reason'].str.contains(keyword, case=False), 'Reason'] = 'Labeling errors'
 
     # CATEGORY 5: Incorrect potency
     for keyword in ['potency', 'strength', 'superpotent', 'subpotent','Potential',]:
-        df.loc[df['Reason'].str.contains(keyword, case=False, na=False), 'Reason'] = 'Incorrect potency'
+        df.loc[df['Reason'].str.contains(keyword, case=False), 'Reason'] = 'Incorrect potency'
 
     # CATEGORY 6: Marketed without approved NDA/ANDA
     for keyword in ['marketed without', 'without an approved', 'unapproved', 'NDA', 'ANDA',
                     'without approved NDA', 'without approved ANDA', 'no NDA', 'no ANDA']:
         df.loc[
-            df['Reason'].str.contains(keyword, case=False, na=False), 'Reason'] = 'Marketed without approved NDA/ANDA'
+            df['Reason'].str.contains(keyword, case=False), 'Reason'] = 'Marketed without approved NDA/ANDA'
 
     # CATEGORY 7: Microbial contamination (handle ALL contamination types here)
     # First catch specific microbial terms
     for keyword in ['microbial contamination', 'bacterial contamination', 'Microbial', 'Bacterial']:
-        df.loc[df['Reason'].str.contains(keyword, case=False, na=False), 'Reason'] = 'Microbial contamination'
+        df.loc[df['Reason'].str.contains(keyword, case=False), 'Reason'] = 'Microbial contamination'
 
     # CATEGORY 8: Lack of process control and Manufacturing defects (includes product contamination)
     for keyword in ['CGMP', 'manufacturing defect', 'quality', 'recalled by a supplier', 'recalled by a su',
@@ -69,8 +69,8 @@ def merge_categories(df):
                     'degradation product', 'nitrosamine', 'NDMA', 'NDEA', 'heavy metal', 'residue', 'imprinted',
                     'defective container', 'container defect', 'leaking container', 'container closure', 'Crystallization',
                     'chemical contamination', 'cross-contamination', 'metal','glass' ,'Particle', 'Cross contamination','Discoloration']:
-        df.loc[df['Reason'].str.contains(keyword, case=False,
-                                         na=False), 'Reason'] = 'Lack of process control and Manufacturing defects'
+        df.loc[df['Reason'].str.contains(keyword, case=False)
+                                         , 'Reason'] = 'Lack of process control and Manufacturing defects'
 
     return df  # Return the modified dataframe
 
