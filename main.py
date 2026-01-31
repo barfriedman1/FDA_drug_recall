@@ -104,9 +104,9 @@ st.badge(" 📈**Top reasons for drug recalls, colored by severity classificatio
 top_8 = filtered_data['Reason'].value_counts().head(8).index
 # Filter data to include only these top 8 reasons
 graph1_data = filtered_data[filtered_data['Reason'].isin(top_8)]
-# Group by Reason and Classification, count occurrences
+# Group by Reason and Classification, count occurrences.dataframe: 1.reason 2. classificaion 3.count + index
 reason_class = graph1_data.groupby(['Reason', 'Classification']).size().reset_index(name='Count')
-# Set Classification as ordered categorical (Class I → II → III) for proper legend order
+# Set Classification as ordered categorical (Class I → II → III) for proper legend order - per each histogram
 reason_class['Classification'] = pd.Categorical(reason_class['Classification'],
                                                 categories=['Class I', 'Class II', 'Class III'], ordered=True)
 
