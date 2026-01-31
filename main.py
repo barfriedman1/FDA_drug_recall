@@ -4,7 +4,6 @@ import plotly.express as px
 import requests
 
 st.title("FDA Drug Recalls Analysis", anchor=False)  # anchor=False removes the clickable link icon
-st.write("Analyzing drug recalls over time or by classification")
 
 # Define a function to fetch data from FDA API
 # @st.cache_data caches the result so it doesn't re-fetch every time the app refreshes
@@ -80,24 +79,25 @@ def merge_categories(df):
 # Get data from API and merge categories
 data = merge_categories(get_data())
 
-# Display summary statistics at the top of the page
-st.write("**By Classification:**")
-# Loop through each class and count how many recalls belong to it
-for cls in ['Class I', 'Class II', 'Class III']:
-    st.write(f"  - {cls}: {len(data[data['Classification'] == cls])} recalls")
-
-st.markdown("---")  # Add a horizontal line separator
 
 # SIDEBAR: Create filter options on the left side of the page
 st.sidebar.header("Filter Options")
+
 # Create a dropdown menu to select classification
 selected_class = st.sidebar.selectbox("Select Classification:", ['All', 'Class I', 'Class II', 'Class III'])
 # Filter the data based on user selection (if 'All' selected, show all data; otherwise filter)
 filtered_data = data if selected_class == 'All' else data[data['Classification'] == selected_class]
 # Show how many recalls match the filter
 st.sidebar.write(f"**Showing {len(filtered_data)} recalls**")
+#  CLASSIFICATION SUMMARY
 
-# GRAPH 1: Horizontal bar chart showing top 8 recall reasons (changed from 9 to 8)
+st.sidebar.markdown("---")  # Add separator
+
+st.sidebar.write("**By Classification:**")
+for cls in ['Class I', 'Class II', 'Class III']:
+    st.sidebar.write(f"  - {cls}: {len(data[data['Classification'] == cls])} recalls")
+
+# GRAPH 1: Horizontal bar chart showing top 8 recall reasons
 st.subheader("Graph 1: Number of Recalls by Reason (top 8)", anchor=False)
 st.write("📊 Top reasons for drug recalls, colored by severity classification")
 
