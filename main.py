@@ -10,21 +10,20 @@ st.title("FDA Drug Recalls Analysis", anchor=False)  # anchor=False removes the 
 @st.cache_data
 def get_data():
     response = requests.get("https://api.fda.gov/drug/enforcement.json?limit=1000")
-    data = response.json()
+    data = response.json() #from JSON to python
 
-    products, classifications, reasons, states, years = [], [], [], [], []
+    products, classifications, reasons, years = [], [], [], []
 
     for recall in data['results']:
         products.append(recall.get('product_description', 'Unknown')[:50])
         classifications.append(recall.get('classification', 'Unknown'))
         reasons.append(recall.get('reason_for_recall', 'Unknown')[:80])
-        states.append(recall.get('state', 'Unknown'))
         report_date = recall.get('report_date', '')
         years.append(report_date[:4] if len(report_date) >= 4 else 'Unknown')
 
     # Create a pandas DataFrame (table) with all the extracted data
     return pd.DataFrame({'Product': products, 'Classification': classifications,
-                         'Reason': reasons, 'State': states, 'Year': years})
+                         'Reason': reasons, 'Year': years})
 
 
 # Define a function to merge similar recall reasons into broader categories
